@@ -1,5 +1,5 @@
 export function Tabs(props) {
-  const { todos } = props;
+  const { todos, selectedTab, setSelectedTab } = props;
   const tabs = ['All', 'Open', 'Completed'];
 
   return (
@@ -19,13 +19,22 @@ export function Tabs(props) {
         // If the tab is equal to complete, we check all the todos where complete is true (i.e. the task is complete) and get the length (number of tasks that aren complete)
 
         return (
-          <button key={tabIndex} className="tab-button">
+          <button
+            onClick={() => {
+              setSelectedTab(tab);
+            }}
+            key={tabIndex}
+            className={
+              'tab-button ' + (tab === selectedTab ? ' tab-selected' : ' ')
+            }
+          >
             <h4>
               {tab} <span>{numOfTasks}</span>
             </h4>
           </button>
         );
       })}
+      <hr />
     </nav>
   );
 }

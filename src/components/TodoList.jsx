@@ -1,15 +1,14 @@
 import { TodoCard } from './TodoCard';
 
 export function TodoList(props) {
-  const { todos } = props;
+  const { todos, selectedTab, handleDeleteTodo } = props;
 
-  let tab = 'Completed';
   const filterTodoList =
-    tab === 'All'
+    selectedTab === 'All'
       ? todos
-      : (tab = 'Completed'
-          ? todos.filter((val) => val.complete)
-          : todos.filter((val) => !val.complete));
+      : selectedTab === 'Completed'
+      ? todos.filter((val) => val.complete)
+      : todos.filter((val) => !val.complete);
 
   // If the tab is "All", assign all the todos to filterTodoList
 
@@ -19,7 +18,14 @@ export function TodoList(props) {
   return (
     <>
       {filterTodoList.map((todo, todoIndex) => {
-        return <TodoCard key={todoIndex} todo={todo} />;
+        return (
+          <TodoCard
+            key={todoIndex}
+            todoIndex={todos.findIndex((val) => val.input === todo.input)}
+            todo={todo}
+            {...props}
+          />
+        );
       })}
     </>
   );
